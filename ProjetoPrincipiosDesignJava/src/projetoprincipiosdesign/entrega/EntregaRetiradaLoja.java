@@ -1,14 +1,8 @@
 package projetoprincipiosdesign.entrega;
 
-public class EntregaRetiradaLoja extends Entrega {
+public class EntregaRetiradaLoja implements IEntrega {
     @Override
     public double calcularFrete(double total) {
-        if (total < 50.0) {
-            throw new IllegalStateException(
-                "Retirada na loja disponível apenas para pedidos a partir de R$ 50,00."
-            );
-        }
-
         return 0.0;
     }
 }
