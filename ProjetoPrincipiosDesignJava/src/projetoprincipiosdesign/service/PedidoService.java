@@ -30,7 +30,7 @@ public class PedidoService {
     }
 
     public String obterCidadeEntrega(Pedido pedido) {
-        return pedido.getCliente().getEndereco().getCidade().getNome();
+        return pedido.getCliente().getEndereco();
     }
 
     public void finalizarPedido(Pedido pedido, String formaPagamento) {

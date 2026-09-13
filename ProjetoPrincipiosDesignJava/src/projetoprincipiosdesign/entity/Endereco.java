@@ -24,4 +24,11 @@ public class Endereco {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+
+    public String getEnderecoCompleto() {
+        if (cidade != null && cidade.getNome() != null) {
+            return logradouro + ", " + cidade.getNome();
+        }
+        return logradouro;
+    }
 }
