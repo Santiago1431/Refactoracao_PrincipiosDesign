@@ -1,4 +1,4 @@
-package projetoprincipiosdesign;
+package projetoprincipiosdesign.entity;
 
 public class Cidade {
     private String nome;

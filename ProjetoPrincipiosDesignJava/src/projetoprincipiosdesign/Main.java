@@ -1,6 +1,12 @@
 package projetoprincipiosdesign;
 
 import java.util.List;
+import projetoprincipiosdesign.entity.Cidade;
+import projetoprincipiosdesign.entity.Cliente;
+import projetoprincipiosdesign.entity.Endereco;
+import projetoprincipiosdesign.entity.ItemPedido;
+import projetoprincipiosdesign.entity.Pedido;
+import projetoprincipiosdesign.service.PedidoService;
 
 public class Main {
     public static void main(String[] args) {

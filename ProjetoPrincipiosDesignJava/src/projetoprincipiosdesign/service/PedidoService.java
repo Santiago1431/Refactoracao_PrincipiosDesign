@@ -1,9 +1,14 @@
-package projetoprincipiosdesign;
+package projetoprincipiosdesign.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import projetoprincipiosdesign.entity.ItemPedido;
+import projetoprincipiosdesign.entity.Pedido;
+import projetoprincipiosdesign.pagamento.PagamentoBoleto;
+import projetoprincipiosdesign.pagamento.PagamentoCartao;
+import projetoprincipiosdesign.pagamento.PagamentoPix;
 
 public class PedidoService extends PagamentoCartao {
     public double calcularTotal(Pedido pedido, String tipoCliente) {

@@ -1,4 +1,4 @@
-package projetoprincipiosdesign;
+package projetoprincipiosdesign.entity;
 
 public class Cliente {
     private String nome;

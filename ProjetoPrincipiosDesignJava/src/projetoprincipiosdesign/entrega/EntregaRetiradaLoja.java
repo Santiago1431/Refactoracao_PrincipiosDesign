@@ -1,4 +1,4 @@
-package projetoprincipiosdesign;
+package projetoprincipiosdesign.entrega;
 
 public class EntregaRetiradaLoja extends Entrega {
     @Override
