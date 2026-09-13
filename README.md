@@ -11,6 +11,36 @@ Analisar e refatorar um sistema de gerenciamento e fechamento de pedidos, elimin
 
 ---
 
+## 🗺️ Alinhamento com o Fluxograma / Diagrama da Arquitetura
+
+O projeto refatorado foi comparado diretamente com o diagrama de arquitetura alvo, confirmando o cumprimento de todos os blocos conceituais e princípios:
+
+```
++---------------------------------------------------------------------------------------+
+|                                  ARQUITETURA ALVO                                     |
++---------------------------------------------------------------------------------------+
+|  [ Pagamento ]  --> ISP (interfaces segregadas) & Composição                          |
+|  [ Desconto ]   --> OCP/DIP (abstração de descontos via Strategy)                     |
+|  [ Entrega ]    --> LSP (abstração de frete determinística e substituível)            |
+|  [Persistência] --> SRP/DIP (isolamento do salvamento de arquivos/repositório)        |
+|  [ Domínio ]    --> Lei de Demeter (delegação interna: Pedido -> Cliente -> Endereço) |
+|  [PedidoService]--> Orquestrador de fluxo enxuto dependente de abstrações             |
++---------------------------------------------------------------------------------------+
+```
+
+### Tabela de Mapeamento: Diagrama vs. Implementação
+
+| Bloco do Diagrama | Elemento no Diagrama | Implementação no Projeto | Princípio Aplicado | Observações |
+| :--- | :--- | :--- | :--- | :--- |
+| **Domínio** | `Pedido`, `Cliente`, `Endereco`, `Cidade` | `entity.Pedido`, `entity.Cliente`, `entity.Endereco`, `entity.Cidade` | **Lei de Demeter** | `Cliente` expõe `getCidadeEntrega()` delegando para `Endereco`, evitando violação de conhecimento interno. |
+| **Desconto** | `<<interface>> Desconto` | `desconto.IDesconto` | **OCP / DIP** | Utiliza convenção `I` (`IDesconto`), implementada por `DescontoAluno`, `DescontoProfessor`, `DescontoFuncionario` e `SemDesconto`. |
+| **Pagamento** | `<<interface>> Pagamento`, `Parcelavel`, `GeraBoleto` | `pagamento.IPagamento`, `IPagamentoParcelavel`, `IPagamentoBoleto` | **ISP / DIP** | Segregação completa: `PagamentoCartao`, `PagamentoPix` e `PagamentoBoleto` implementam apenas o que utilizam. |
+| **Entrega** | `<<interface>> TipoEntrega` (`EntregaDomicilio`, `RetiradaLoja`) | `entrega.IEntrega` (`Entrega`, `EntregaRetiradaLoja`) | **LSP** | Eliminação da exceção em `EntregaRetiradaLoja`, garantindo substituibilidade e retorno numérico previsível de frete. |
+| **Persistência** | `PedidoRepository` / `PedidoRepositoryArquivo` | `repository.PedidoRepository` | **SRP** | Isola o salvamento em `pedidos.txt` para fora do serviço (atende à nota do roteiro de separar o salvamento). |
+| **Orquestração** | `PedidoService` | `service.PedidoService` | **SRP / Composição** | Classe central enxuta, sem herança indevida de cartão e sem acoplamento a classes concretas. |
+
+---
+
 ## 🛠️ Princípios Trabalhados e Mudanças Realizadas
 
 ### 1. Responsabilidade Única (Single Responsibility Principle — SRP)
