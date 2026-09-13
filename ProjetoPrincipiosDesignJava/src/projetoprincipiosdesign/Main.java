@@ -1,6 +1,7 @@
 package projetoprincipiosdesign;
 
 import java.util.List;
+import projetoprincipiosdesign.desconto.DescontoAluno;
 import projetoprincipiosdesign.entity.Cidade;
 import projetoprincipiosdesign.entity.Cliente;
 import projetoprincipiosdesign.entity.Endereco;
@@ -36,7 +37,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Total com desconto:");
-        System.out.printf("R$ %.2f%n", servico.calcularTotal(pedido, "ALUNO"));
+        System.out.printf("R$ %.2f%n", servico.calcularTotal(pedido, new DescontoAluno()));
 
         System.out.println();
         System.out.println("Pagamento:");

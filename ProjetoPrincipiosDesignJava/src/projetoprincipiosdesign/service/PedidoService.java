@@ -1,5 +1,7 @@
 package projetoprincipiosdesign.service;
 
+import projetoprincipiosdesign.desconto.DescontoAluno;
+import projetoprincipiosdesign.desconto.IDesconto;
 import projetoprincipiosdesign.entity.ItemPedido;
 import projetoprincipiosdesign.entity.Pedido;
 import projetoprincipiosdesign.pagamento.IPagamento;
@@ -11,22 +13,14 @@ import projetoprincipiosdesign.repository.PedidoRepository;
 public class PedidoService {
     private PedidoRepository pedidoRepository = new PedidoRepository();
 
-    public double calcularTotal(Pedido pedido, String tipoCliente) {
+    public double calcularTotal(Pedido pedido, IDesconto desconto) {
         double total = 0.0;
 
         for (ItemPedido item : pedido.getItens()) {
             total += item.getPreco() * item.getQuantidade();
         }
 
-        if (tipoCliente.equals("ALUNO")) {
-            total *= 0.90;
-        } else if (tipoCliente.equals("PROFESSOR")) {
-            total *= 0.85;
-        } else if (tipoCliente.equals("FUNCIONARIO")) {
-            total *= 0.80;
-        }
-
-        return total;
+        return desconto.aplicar(total);
     }
 
     public String obterCidadeEntrega(Pedido pedido) {
@@ -34,7 +28,11 @@ public class PedidoService {
     }
 
     public void finalizarPedido(Pedido pedido, String formaPagamento) {
-        double total = calcularTotal(pedido, "ALUNO");
+        finalizarPedido(pedido, new DescontoAluno(), formaPagamento);
+    }
+
+    public void finalizarPedido(Pedido pedido, IDesconto desconto, String formaPagamento) {
+        double total = calcularTotal(pedido, desconto);
 
         pedidoRepository.salvar(pedido, total);
 
