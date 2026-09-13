@@ -1,16 +1,15 @@
 package projetoprincipiosdesign.service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import projetoprincipiosdesign.entity.ItemPedido;
 import projetoprincipiosdesign.entity.Pedido;
 import projetoprincipiosdesign.pagamento.PagamentoBoleto;
 import projetoprincipiosdesign.pagamento.PagamentoCartao;
 import projetoprincipiosdesign.pagamento.PagamentoPix;
+import projetoprincipiosdesign.repository.PedidoRepository;
 
 public class PedidoService extends PagamentoCartao {
+    private PedidoRepository pedidoRepository = new PedidoRepository();
+
     public double calcularTotal(Pedido pedido, String tipoCliente) {
         double total = 0.0;
 
@@ -36,19 +35,7 @@ public class PedidoService extends PagamentoCartao {
     public void finalizarPedido(Pedido pedido, String formaPagamento) {
         double total = calcularTotal(pedido, "ALUNO");
 
-        System.out.println("Salvando pedido em arquivo...");
-        String linha = pedido.getCliente().getNome() + ";" + total + System.lineSeparator();
-
-        try {
-            Files.writeString(
-                Path.of("pedidos.txt"),
-                linha,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-            );
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao salvar o pedido em arquivo.", e);
-        }
+        pedidoRepository.salvar(pedido, total);
 
         System.out.println("Gerando resumo do pedido...");
         System.out.println("Cliente: " + pedido.getCliente().getNome());
