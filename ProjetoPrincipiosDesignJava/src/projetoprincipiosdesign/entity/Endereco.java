@@ -25,6 +25,10 @@ public class Endereco {
         this.cidade = cidade;
     }
 
+    public String getNomeCidade() {
+        return cidade != null ? cidade.getNome() : "";
+    }
+
     public String getEnderecoCompleto() {
         if (cidade != null && cidade.getNome() != null) {
             return logradouro + ", " + cidade.getNome();

@@ -26,4 +26,8 @@ public class Pedido {
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
+
+    public String getCidadeEntrega() {
+        return cliente != null ? cliente.getCidadeEntrega() : "";
+    }
 }

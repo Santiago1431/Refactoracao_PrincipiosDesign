@@ -18,10 +18,14 @@ public class Cliente {
     }
 
     public String getEndereco() {
-        return endereco.getEnderecoCompleto();
+        return endereco != null ? endereco.getEnderecoCompleto() : "";
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public String getCidadeEntrega() {
+        return endereco != null ? endereco.getNomeCidade() : "";
     }
 }

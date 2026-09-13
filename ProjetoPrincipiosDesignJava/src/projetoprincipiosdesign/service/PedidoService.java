@@ -1,6 +1,5 @@
 package projetoprincipiosdesign.service;
 
-import projetoprincipiosdesign.desconto.DescontoAluno;
 import projetoprincipiosdesign.desconto.IDesconto;
 import projetoprincipiosdesign.entity.ItemPedido;
 import projetoprincipiosdesign.entity.Pedido;
@@ -24,11 +23,7 @@ public class PedidoService {
     }
 
     public String obterCidadeEntrega(Pedido pedido) {
-        return pedido.getCliente().getEndereco();
-    }
-
-    public void finalizarPedido(Pedido pedido, String formaPagamento) {
-        finalizarPedido(pedido, new DescontoAluno(), formaPagamento);
+        return pedido.getCidadeEntrega();
     }
 
     public void finalizarPedido(Pedido pedido, IDesconto desconto, String formaPagamento) {

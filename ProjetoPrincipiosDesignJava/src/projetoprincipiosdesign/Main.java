@@ -41,7 +41,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Pagamento:");
-        servico.finalizarPedido(pedido, "CARTAO");
+        servico.finalizarPedido(pedido, new DescontoAluno(), "CARTAO");
 
         System.out.println();
         System.out.println("Programa executado com sucesso.");
