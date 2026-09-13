@@ -1,6 +1,6 @@
 package projetoprincipiosdesign.pagamento;
 
-public class PagamentoCartao implements IPagamento {
+public class PagamentoCartao implements IPagamento, IPagamentoParcelavel {
     @Override
     public void pagar(double valor) {
         System.out.printf("Pagamento no cartão: R$ %.2f%n", valor);
@@ -13,10 +13,5 @@ public class PagamentoCartao implements IPagamento {
             parcelas,
             valor / parcelas
         );
-    }
-
-    @Override
-    public void gerarBoleto(double valor) {
-        System.out.println("Operação não utilizada para cartão.");
     }
 }

@@ -1,14 +1,9 @@
 package projetoprincipiosdesign.pagamento;
 
-public class PagamentoBoleto implements IPagamento {
+public class PagamentoBoleto implements IPagamento, IPagamentoBoleto {
     @Override
     public void pagar(double valor) {
         System.out.printf("Boleto registrado: R$ %.2f%n", valor);
-    }
-
-    @Override
-    public void parcelar(double valor, int parcelas) {
-        System.out.println("Operação não utilizada para boleto.");
     }
 
     @Override
