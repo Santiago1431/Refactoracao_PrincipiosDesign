@@ -7,6 +7,7 @@ import projetoprincipiosdesign.entity.Cliente;
 import projetoprincipiosdesign.entity.Endereco;
 import projetoprincipiosdesign.entity.ItemPedido;
 import projetoprincipiosdesign.entity.Pedido;
+import projetoprincipiosdesign.pagamento.PagamentoCartao;
 import projetoprincipiosdesign.service.PedidoService;
 
 public class Main {
@@ -41,7 +42,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Pagamento:");
-        servico.finalizarPedido(pedido, new DescontoAluno(), "CARTAO");
+        servico.finalizarPedido(pedido, new DescontoAluno(), new PagamentoCartao());
 
         System.out.println();
         System.out.println("Programa executado com sucesso.");

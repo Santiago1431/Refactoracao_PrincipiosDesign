@@ -4,9 +4,6 @@ import projetoprincipiosdesign.desconto.IDesconto;
 import projetoprincipiosdesign.entity.ItemPedido;
 import projetoprincipiosdesign.entity.Pedido;
 import projetoprincipiosdesign.pagamento.IPagamento;
-import projetoprincipiosdesign.pagamento.PagamentoBoleto;
-import projetoprincipiosdesign.pagamento.PagamentoCartao;
-import projetoprincipiosdesign.pagamento.PagamentoPix;
 import projetoprincipiosdesign.repository.PedidoRepository;
 
 public class PedidoService {
@@ -26,7 +23,7 @@ public class PedidoService {
         return pedido.getCidadeEntrega();
     }
 
-    public void finalizarPedido(Pedido pedido, IDesconto desconto, String formaPagamento) {
+    public void finalizarPedido(Pedido pedido, IDesconto desconto, IPagamento formaPagamento) {
         double total = calcularTotal(pedido, desconto);
 
         pedidoRepository.salvar(pedido, total);
@@ -35,16 +32,7 @@ public class PedidoService {
         System.out.println("Cliente: " + pedido.getCliente().getNome());
         System.out.printf("Total: R$ %.2f%n", total);
 
-        if (formaPagamento.equals("CARTAO")) {
-            IPagamento pagamento = new PagamentoCartao();
-            pagamento.pagar(total);
-        } else if (formaPagamento.equals("PIX")) {
-            IPagamento pagamento = new PagamentoPix();
-            pagamento.pagar(total);
-        } else if (formaPagamento.equals("BOLETO")) {
-            PagamentoBoleto pagamento = new PagamentoBoleto();
-            pagamento.gerarBoleto(total);
-        }
+        formaPagamento.pagar(total);
 
         System.out.println(
             "Enviando mensagem para " + pedido.getCliente().getNome() + ": pedido finalizado."
